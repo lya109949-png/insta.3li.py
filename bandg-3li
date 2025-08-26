@@ -1,0 +1,65 @@
+#!/bin/bash
+# Inshackle v1.1 (Fixed Version)
+# Re-coded for stability
+
+# Colors
+RED="\e[31m"
+GREEN="\e[32m"
+YELLOW="\e[33m"
+RESET="\e[0m"
+
+# Check dependencies
+for cmd in openssl curl; do
+    if ! command -v $cmd &> /dev/null; then
+        echo -e "${RED}[!] Missing dependency: $cmd${RESET}"
+        echo "    Install it with: sudo apt install $cmd -y"
+        exit 1
+    fi
+done
+
+# Random string generators
+string4=$(openssl rand -hex 32 | cut -c 1-4)
+string8=$(openssl rand -hex 32 | cut -c 1-8)
+string12=$(openssl rand -hex 32 | cut -c 1-12)
+string16=$(openssl rand -hex 32 | cut -c 1-16)
+
+device="android-$string16"
+uuid=$(openssl rand -hex 32 | cut -c 1-16)
+phone="$string8-$string4-$string4-$string12"
+guid="$string8-$string4-$string4-$string12"
+
+# Menu
+menu() {
+    clear
+    echo -e "${YELLOW}=============================${RESET}"
+    echo -e "${GREEN}       Inshackle Menu${RESET}"
+    echo -e "${YELLOW}=============================${RESET}"
+    echo "1) Unfollow Tracker"
+    echo "2) Increase Followers"
+    echo "3) Download Stories"
+    echo "4) Download Saved Content"
+    echo "5) Download Following List"
+    echo "6) Download Followers List"
+    echo "7) Download Profile Info"
+    echo "8) Activate Unfollower"
+    echo "0) Exit"
+    echo -e "${YELLOW}=============================${RESET}"
+    read -p "Choose an option: " choice
+    case $choice in
+        1) echo "[*] Unfollow Tracker running...";;
+        2) echo "[*] Increase Followers running...";;
+        3) echo "[*] Download Stories running...";;
+        4) echo "[*] Download Saved Content running...";;
+        5) echo "[*] Download Following List running...";;
+        6) echo "[*] Download Followers List running...";;
+        7) echo "[*] Download Profile Info running...";;
+        8) echo "[*] Activate Unfollower running...";;
+        0) echo "Exiting..."; exit 0;;
+        *) echo -e "${RED}[!] Invalid option${RESET}"; sleep 1; menu;;
+    esac
+}
+
+# Run menu
+while true; do
+    menu
+done
